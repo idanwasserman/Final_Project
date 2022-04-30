@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+{% block title %}Home{% endblock %}
+{% block content %}
+<style>
+ h2{
+   color: #fff;
+ }
+ body{
+    background-image: linear-gradient(rgba(0, 0, 0, 0.75),rgba(0, 0, 0, 0.75)), url('https://images.unsplash.com/photo-1518455027359-f3f8164ba6bd?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1536&q=80' );
+    background-repeat: no-repeat;
+    background-size: 100% 100vh;
+  }
+
+  button{
+    width: 250px;
+    padding: 15px 0;
+    text-align: center;
+    margin: 20px 10px;
+    border-radius: 25px;
+    font-weight: bold;
+    border: 2px solid #3399ff;
+    background: transparent;
+    color: #fff;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+
+  span {
+    background: #3399ff;
+    height: 100%;
+    width: 0;
+    border-radius: 25px;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    z-index: -1;
+    transition: 0.5s;
+  }
+
+  button:hover span{
+    width: 100%;
+  }
+
+  button:hover{
+    border: none;
+  }
+  .content{
+    width: 100%;
+    position: absolute;
+    top: 30%;
+    left: 0%;
+    text-align: center;
+    color: #fff;
+  }
+  </style>
+<h2>Hello {{user.username}} </h2>
+
+<body>
+  <div class="content">
+    <h1>SQL Injection Base</h1>
+    <h4>Welcome to SQL injection testing center, Here you can study about SQL injection and test your code</h4>
+    <div>
+      <button id="aboutButton" type="button"><span></span>About SQL Injection</button>
+      <button id="testButton" type="button"><span></span>Test Your Code</button>
+      </button>
+    </div>
+  </div>
+</body>
+
+<script type="text/javascript">
+  document.getElementById("aboutButton").onclick = function () {
+      location.href = "/about";
+  };
+</script>
+<script type="text/javascript">
+  document.getElementById("testButton").onclick = function () {
+      location.href = "/app";
+  };
+</script>
+
+
+{% endblock %}
