@@ -25,7 +25,16 @@ def api_instances():
 @views.route('/instances/search/byType/<type>', methods=['GET'])
 def api_instances_search_by_type(type):
     if request.method == 'GET': # get all instances
-        return get_all_instances(type, request.args)
+        return get_all_instances_by_type(type, request.args)
+
+    else:
+        return bad_request_exception("Not a GET method")
+
+
+@views.route('/instances/search/byAtt/<attKey>/<attVal>', methods=['GET'])
+def api_instances_search_by_att(attKey, attVal):
+    if request.method == 'GET': # get all instances that contains (attKey: attVal) in attributes
+        return get_all_instances_by_attribute(attKey, attVal, request.args)
 
     else:
         return bad_request_exception("Not a GET method")

@@ -41,12 +41,50 @@ def get_all_instances_by_type(type, args):
 
     # check type
     if type is None or len(type) == 0 or type not in VALID_TYPES:
-        return empty_field_exception("type error")
+        return empty_field_exception(f"The type |{type}| is invalid")
 
-    #TODO get all instances by type from db
+    # get all instances by type from db
+    try:
+        my_query = { TYPE: type }
+        cursor = db.project_tb.find(my_query).sort(ID, pymongo.ASCENDING).skip(size * page).limit(size)
+        instances = [document_to_instance(doc) for doc in cursor]
+        return make_response({"instances": instances})
+
+    except Exception as e:
+        return bad_request_exception({
+            TYPE: type,
+            "args": args,
+            RESULT: f"Something went wrong in get_all_instances_by_type(type, args): {e}"
+        })
 
 
-    return make_response(args)
+def get_all_instances_by_attribute(attKey, value, args):
+    # get size and page from args
+    size = int(get_argument(SIZE, args, 10))
+    if size <= 0:
+        return not_accepteable_exception("Size cannot be lees than 1")
+    page = int(get_argument(PAGE, args, 0))
+    if page < 0:
+        return not_accepteable_exception("Page cannot be lees than 0")
+
+    # check attKey and attVal
+    if attKey is None or len(attKey) == 0:
+        return empty_field_exception(f"attKey is missing")
+    if value is None or len(value) == 0:
+        return empty_field_exception(f"attVal is missing")
+
+    # get all instances by attribute
+    key = ATTRIBUTES + '.' + attKey
+    my_query = {key: value}
+    try:
+        cursor = db.project_tb.find(my_query)
+        instances = [document_to_instance(doc) for doc in cursor]
+        return make_response({"instances": instances})
+    except Exception as e:
+        return bad_request_exception({
+            "attKey": attKey, "attVal": value, "args": args,
+            RESULT: f"Something went wrong in get_all_instances_by_attribute(attKey, value, args): {e}"
+        })        
 
 
 def create_instance(json):
