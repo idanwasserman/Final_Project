@@ -8,13 +8,20 @@ views = Blueprint('views', __name__)
 
 @views.route('/')
 def home():
-    return render_template('home.html')
-
+    return render_template('signin.html') #TODO CHANGE IT TO PATH user/login
 
 @views.route('/dashboard/')
 @login_required
 def dashboard():
     return render_template('dashboard.html')
+
+@views.route('user/signup')
+def signup():
+    return render_template('signup.html')
+
+@views.route('user/login')
+def login():
+    return render_template('signin.html')
 
 
 @views.route('/instances/', methods=['GET', 'POST', 'DELETE'])

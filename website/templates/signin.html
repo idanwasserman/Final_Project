@@ -1,16 +1,16 @@
 {% extends "base.html" %}
-{% block title %}Sign-in{% endblock %}
+{% block title %}Sign In{% endblock %}
 {% block content %}
-<form method="POST">
-  <h3 align="center">Sign-in</h3>
+<!-- <form method="POST">
+  <h3 align="center">Sign In</h3>
   <div class="form-group">
-    <label for="email">Email</label>
+    <label for="username">Username</label>
     <input
-      type="email"
+      type="username"
       class="form-control"
-      id="email"
-      name="email"
-      placeholder="Enter email"
+      id="username"
+      name="username"
+      placeholder="Enter username"
     />
   </div>
   <div class="form-group">
@@ -24,6 +24,80 @@
     />
   </div>
   <br />
-  <button type="submit" class="btn btn-primary">Sign-in</button>
+  <button type="submit" class="btn btn-primary">Sign In</button>
+</form> -->
+<style>
+  body{
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+    background-image: url("https://images.unsplash.com/photo-1497215728101-856f4ea42174?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80");
+    background-repeat: no-repeat;
+    background-size: 100% 100vh;
+  }
+
+  .signin_form {
+    width: 300px;
+    box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.3);
+    background: #fff;
+    padding: 20px;
+    margin: 8% auto 0;
+    text-align: center;
+    }
+    .signin_form h1 {
+      color: #1c8adb;
+      margin-bottom: 30px;
+    }
+
+    .input-box
+    {
+      border-radius: 20px;
+      padding: 10px;
+      margin: 10px 0;
+      width: 100%;
+      border: 1px solid #999;
+      outline: none;
+    } 
+
+    button
+    {
+      color: #fff;
+      width: 100%;
+      padding: 10px;
+      border-radius: 20px;
+      font-size: 15px;
+      margin: 10px 0;
+      border: none;
+      outline: none;
+      cursor: pointer;
+    }
+
+    .signin-btn
+    {
+      background-color: #1c8adb;
+    }
+
+    img
+    {
+      width: 70px ;
+      margin-top: -60px;
+    }
+</style>
+<body>
+  <form name="signin_form" method="POST">
+    <div class="signin_form">
+    <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png">
+    <h1>Sign In</h1>
+    <form>
+      <input type="email" id="email" name="email" class="input-box" placeholder="Email">
+      <input type="password" id="password" name="password" class="input-box" placeholder="Password">
+      
+      <button type="submit" class="btn btn-primary">Sign In</button>
+      <hr>
+      <p class="error error--hidden"></p>
+      <p>Don't have an account? <a href="/user/signup">Sign Up</a></p>
+    </form>
+  </div>
 </form>
+</body>
 {% endblock %}

@@ -57,14 +57,13 @@ class User():
 
     def signout(self):
         session.clear()
-        return redirect('/')
+        return redirect('/user/login')
 
 
     def login(self):
         # Extract info from request.form
         password = request.form.get(PASSWORD)
         email = request.form.get(EMAIL)
-
         if email is None or len(email) == 0:
             return jsonify({ ERROR: "Email cannot be empty string!"}), 400
         if password is None or len(password) == 0:
