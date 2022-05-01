@@ -1,16 +1,16 @@
 {% extends "base.html" %}
-{% block title %}Sign In{% endblock %}
+{% block title %}Sign-in{% endblock %}
 {% block content %}
 <form method="POST">
-  <h3 align="center">Sign In</h3>
+  <h3 align="center">Sign-in</h3>
   <div class="form-group">
-    <label for="username">Username</label>
+    <label for="email">Email</label>
     <input
-      type="username"
+      type="email"
       class="form-control"
-      id="username"
-      name="username"
-      placeholder="Enter username"
+      id="email"
+      name="email"
+      placeholder="Enter email"
     />
   </div>
   <div class="form-group">
@@ -24,6 +24,6 @@
     />
   </div>
   <br />
-  <button type="submit" class="btn btn-primary">Sign In</button>
+  <button type="submit" class="btn btn-primary">Sign-in</button>
 </form>
 {% endblock %}

@@ -79,7 +79,8 @@ def get_all_instances_by_attribute(attKey, value, args):
     try:
         cursor = db.project_tb.find(my_query)
         instances = [document_to_instance(doc) for doc in cursor]
-        return make_response({"instances": instances})
+        return instances
+        
     except Exception as e:
         return bad_request_exception({
             "attKey": attKey, "attVal": value, "args": args,
@@ -311,3 +312,18 @@ def invoke_activity(json):
         return invoker.execute(instance[ATTRIBUTES])
     except Exception as e:
         return bad_request_exception(f"invoke_activity(json) caught exception: {e}")
+
+
+def register(form):
+    try:
+        email = form.get(EMAIL)
+        username = form.get(USERNAME)
+        password1 = form.get(PASSWORD + '1')
+        password2 = form.get(PASSWORD + '2')
+
+    except Exception as e:
+        return bad_request_exception({"Error":e})
+
+    return make_response({
+        EMAIL: email, USERNAME: username, PASSWORD+'1':password1, PASSWORD+'2':password2 
+    })

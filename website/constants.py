@@ -1,6 +1,9 @@
+ERROR = "error"
 DEFAULT_USE_CASE = "UseCase_GetAllUseCases"
 USE_CASE_PREFIX = "UseCase"
 INSTANCE = "instance"
+
+LOGGED_IN = "logged_in"
 
 ID = "_id"
 USER_ID = "user_id"
@@ -16,6 +19,10 @@ USER = "USER"
 QUERY = "QUERY"
 ACTIVITY = "ACTIVITY"
 VALID_TYPES = [USER, QUERY, ACTIVITY]
+
+USERNAME = "username"
+EMAIL = "email"
+PASSWORD = "password"
 
 SIZE = "size"
 PAGE = "page"

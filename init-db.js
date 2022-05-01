@@ -1,25 +1,24 @@
 db = db.getSiblingDB("project_db");
 db.project_tb.drop();
+db.users.drop()
 
 db.project_tb.insertMany([
     {
         "_id": "1",
-        "type": "USER",
+        "type": "QUERY",
         "attributes": {
-            "name": "idan",
-            "email": "idan@gmail.com",
-            "password": "123456"
+            "code": "drop database",
+            "result": "might be sql injection"
         },
         "parent": null,
-        "children": ["3"]
+        "children": []
     },
     {
         "_id": "2",
-        "type": "USER",
+        "type": "QUERY",
         "attributes": {
-            "name": "meron",
-            "email": "meron@gmail.com",
-            "password": "abcdef"
+            "code": "drop database",
+            "result": "might be sql injection"
         },
         "parent": null,
         "children": []

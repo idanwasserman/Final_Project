@@ -1,16 +1,23 @@
-from flask import Blueprint, jsonify, make_response, request
-from . import db
+from flask import Blueprint, jsonify, make_response, render_template, request
+from . import db, login_required
 from .services import *
+
 
 views = Blueprint('views', __name__)
 
 
-@views.route('/', methods=['GET'])
+@views.route('/')
 def home():
-    return "Home page"
+    return render_template('home.html')
 
 
-@views.route('/instances', methods=['GET', 'POST', 'DELETE'])
+@views.route('/dashboard/')
+@login_required
+def dashboard():
+    return render_template('dashboard.html')
+
+
+@views.route('/instances/', methods=['GET', 'POST', 'DELETE'])
 def api_instances():
     if request.method == 'GET': # get all instances
         return get_all_instances(request.args)
@@ -22,7 +29,7 @@ def api_instances():
         return delete_all_instances()
 
 
-@views.route('/instances/search/byType/<type>', methods=['GET'])
+@views.route('/instances/search/byType/<type>/', methods=['GET'])
 def api_instances_search_by_type(type):
     if request.method == 'GET': # get all instances
         return get_all_instances_by_type(type, request.args)
@@ -31,7 +38,7 @@ def api_instances_search_by_type(type):
         return bad_request_exception("Not a GET method")
 
 
-@views.route('/instances/search/byAtt/<attKey>/<attVal>', methods=['GET'])
+@views.route('/instances/search/byAtt/<attKey>/<attVal>/', methods=['GET'])
 def api_instances_search_by_att(attKey, attVal):
     if request.method == 'GET': # get all instances that contains (attKey: attVal) in attributes
         return get_all_instances_by_attribute(attKey, attVal, request.args)
@@ -40,7 +47,7 @@ def api_instances_search_by_att(attKey, attVal):
         return bad_request_exception("Not a GET method")
 
 
-@views.route('/instances/<id>', methods=['GET', 'PUT', 'DELETE'])
+@views.route('/instances/<id>/', methods=['GET', 'PUT', 'DELETE'])
 def api_each_instance(id):
     if request.method == 'GET':
         return get_instance(id)
@@ -52,7 +59,7 @@ def api_each_instance(id):
         return delete_instance(id)
 
 
-@views.route('/instances/<id>/children', methods=['GET', 'PUT'])
+@views.route('/instances/<id>/children/', methods=['GET', 'PUT'])
 def api_instances_children(id):
     if request.method == 'GET': # get instance children
         return get_instance_children(id, request.args)
@@ -64,7 +71,7 @@ def api_instances_children(id):
         return bad_request_exception("Not a GET/PUT method")
 
 
-@views.route('/instances/<id>/parent', methods=['GET'])
+@views.route('/instances/<id>/parent/', methods=['GET'])
 def api_instances_parent(id):
     if request.method == 'GET': # get instance parent
         return get_instance_parent(id)
@@ -73,7 +80,7 @@ def api_instances_parent(id):
         return bad_request_exception("Not a GET method")
 
 
-@views.route('/activities', methods=['POST'])
+@views.route('/activities/', methods=['POST'])
 def api_activities():
     if request.method == 'POST': # invoke activity
         return invoke_activity(request.json)
