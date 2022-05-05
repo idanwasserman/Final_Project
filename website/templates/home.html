@@ -1,84 +1,87 @@
 {% extends "base.html" %}
 
-{% block title %}Sign-Up{% endblock %}
+{% block title %}Home{% endblock %}
 {% block content %}
 
-<div style="float:left;">
-  <form name="signup_form" method="POST">
-    <h3 align="center">Create an Account</h3>
-    <div class="form-group">
-      <label for="username">Username</label>
-      <input
-        type="text"
-        class="form-control"
-        id="username"
-        name="username"
-        placeholder="Enter username"
-      />
-    </div>
-    <div class="form-group">
-      <label for="email">Email Address</label>
-      <input
-        type="email"
-        class="form-control"
-        id="email"
-        name="email"
-        placeholder="Enter email"
-      />
-    </div>
-    <div class="form-group">
-      <label for="password1">Password</label>
-      <input
-        type="password"
-        class="form-control"
-        id="password1"
-        name="password1"
-        placeholder="Enter password"
-      />
-    </div>
-    <div class="form-group">
-      <label for="password2">Password (Confirm)</label>
-      <input
-        type="password"
-        class="form-control"
-        id="password2"
-        name="password2"
-        placeholder="Confirm password"
-      />
-    </div>
-    <br />
-    <p class="error error--hidden"></p>
-    <button type="submit" class="btn btn-primary">Submit</button>
-  </form>
-</div>
+<style>
+  
+    body{
+       background-image: linear-gradient(rgba(0, 0, 0, 0.1),rgba(0, 0, 0, 0.1)), url('https://images.unsplash.com/photo-1596079890744-c1a0462d0975?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1171&q=80');
+       background-repeat: no-repeat;
+       background-size: 100% 100vh;
+     }
+   
+     button{
+       width: 250px;
+       padding: 15px 0;
+       text-align: center;
+       margin: 20px 10px;
+       border-radius: 25px;
+       font-weight: bold;
+       border: 2px solid #3399ff;
+       background: transparent;
+       cursor: pointer;
+       position: relative;
+       overflow: hidden;
+     }
+   
+     span {
+       background: #3399ff;
+       height: 100%;
+       width: 0;
+       border-radius: 25px;
+       position: absolute;
+       left: 0;
+       bottom: 0;
+       z-index: -1;
+       transition: 0.5s;
+     }
+   
+     button:hover span{
+       width: 100%;
+     }
+   
+     button:hover{
+       border: none;
+     }
+    .content{
+        width: 100%;
+       /* position: absolute;  */
+       top: 50%;
+       left: 0%;
+       text-align: center;
+     } 
+     </style>
 
-<div style="float:right;">
-  <form method="POST" name="signin_form" >
-    <h3 align="center">Sign-In</h3>
-    <div class="form-group">
-      <label for="email">Email</label>
-      <input
-        type="email"
-        class="form-control"
-        id="email"
-        name="email"
-        placeholder="Enter email"
-      />
+    <div class="navbar">
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/about/">About SQLI</a></li>
+            <li><a href="/testCode/">Test Code</a></li>
+            <li><a href="/dashboard/">Dashboard</a></li>
+        </ul>
     </div>
-    <div class="form-group">
-      <label for="password">Password</label>
-      <input
-        type="password"
-        class="form-control"
-        id="password"
-        name="password"
-        placeholder="Enter password"
-      />
-    </div>
-    <br />
-    <p class="error error--hidden"></p>
-    <button type="submit" class="btn btn-primary">Login</button>
-  </form>
-</div>
-
+   <body>
+     <div class="content">
+         <br><br><br><br>
+       <h1>SQL Injection Base</h1>
+       <h4>Welcome to SQL injection testing center, Here you can study about SQL injection and test your code</h4>
+       <div>
+         <button id="aboutButton" type="button"><span></span>About SQL Injection</button>
+         <button id="testButton" type="button"><span></span>Test Your Code</button>
+         </button>
+       </div>
+     </div>
+   </body>
+   
+   <script type="text/javascript">
+     document.getElementById("aboutButton").onclick = function () {
+         location.href = "/about";
+     };
+   </script>
+   <script type="text/javascript">
+     document.getElementById("testButton").onclick = function () {
+         location.href = "/app";
+     };
+   </script>
 {% endblock %}

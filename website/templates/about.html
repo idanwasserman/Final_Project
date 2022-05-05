@@ -1,71 +1,54 @@
 {% extends "base.html" %}
-{% block title %}Home{% endblock %}
+{% block title %}About SQLI{% endblock %}
 {% block content %}
 <style>
-  h2{
-    color: #fff;
+  h2 h3 p{
+    color: black;
   }
-  h3{
-    color: #fff;
-  }
-  p {
-    color: #fff;
-  }
+
   body{
-     background-image: linear-gradient(rgba(0, 0, 0, 0.75),rgba(0, 0, 0, 0.75)), url('https://images.unsplash.com/photo-1518455027359-f3f8164ba6bd?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1536&q=80' );
-     background-repeat: no-repeat;
+     background-image: linear-gradient(rgba(0, 0, 0, 0),rgba(0, 0, 0, 0)), url('https://images.unsplash.com/photo-1604147706283-d7119b5b822c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80' );
+     background-repeat:  no-repeat;
      background-size: 100% 100vh;
    }
- 
-   button{
-     width: 250px;
-     padding: 15px 0;
-     text-align: center;
-     margin: 20px 10px;
-     border-radius: 25px;
-     font-weight: bold;
-     border: 2px solid #3399ff;
-     background: transparent;
-     color: #fff;
-     cursor: pointer;
-     position: relative;
-     overflow: hidden;
-   }
- 
-   span {
-     background: #3399ff;
-     height: 100%;
-     width: 0;
-     border-radius: 25px;
-     position: absolute;
-     left: 0;
-     bottom: 0;
-     z-index: -1;
-     transition: 0.5s;
-   }
- 
-   button:hover span{
-     width: 100%;
-   }
- 
-   button:hover{
-     border: none;
-   }
    .content{
-     width: 100%;
-     position: absolute;
-     top: 30%;
-     left: 0%;
-     text-align: center;
-     color: #fff;
+    padding: 30px;
    }
+
    </style>
+    <body>
+        <div class="navbar">
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/mongoSQLI">Mongo SQLI</a></li>
+                <li><a href="/redisSQLI">Redis SQLI</a></li>
+                <li><a href="/testCode/">Test Code</a></li>
+                <li><a href="/dashboard/">Dashboard</a></li>
+                
+            </ul>
+        </div>
+    </body>
+    <div class="content">
 <h3>About SQL Injection</h3>
 <p>SQL injection is a code injection technique that might destroy your database.
-Is one of the most common web hacking techniques, and it
- is the placement of malicious code in SQL statements, via web page input.</p>>
+SQLI is one of the most common web hacking techniques, and it
+ is the placement of malicious code in SQL statements, via web page input.
+</br>SQL injection usually occurs when you ask a user for input, like their username/userid, and instead of a name/id,
+  the user gives you an SQL statement that you will unknowingly run on your database.</p>
 
-<h3>Examples</h3>
+<h3>SQL Injection Based on 1=1 is Always True</h3>
+<p>The original purpose of the code was to create an SQL statement to select a user, with a given user id.
+  If there is nothing to prevent a user from entering "wrong" input, the user can enter some "smart" input like this:</br>
+  UserId: 
+  77 OR 1=1.</br>Example:</p>
+  <p class="query" >SELECT * FROM Users WHERE UserId = 77 OR 1=1; </p>
+  <p>The SQL above is valid and will return ALL rows from the "Users" table, since OR 1=1 is always TRUE.
+    Does the example above look dangerous? What if the "Users" table contains names and passwords? 
+    The SQL statement above is much the same as this:</p>
+    <p class="query">SELECT UserId, Name, Password FROM Users WHERE UserId = 77 or 1=1;</p>
+    <p>A hacker might get access to all the user names and passwords in a database, by simply inserting 105 OR 1=1 into the input field.</p>
+    <h3>SQL Injection Based on ""="" is Always True</h3>
+ 
 <div>
   <button id="mongoBtn" type="button"><span></span>MongoDB SQLI</button>
   <button id="redisBtn" type="button"><span></span>Redis SQLI</button>
@@ -73,12 +56,13 @@ Is one of the most common web hacking techniques, and it
 </div>
 <script type="text/javascript">
   document.getElementById("mongoBtn").onclick = function () {
-      location.href = "/mongoDB_SQL";
+      location.href = "/mongoSQLI";
   };
 </script>
 <script type="text/javascript">
   document.getElementById("redisBtn").onclick = function () {
-      location.href = "/redis_SQL";
+      location.href = "/redisSQLI";
   };
 </script>
+</div>
 {% endblock %}

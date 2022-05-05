@@ -1,13 +1,9 @@
 {% extends "base.html" %}
-{% block title %}Home{% endblock %}
+{% block title %}Test Your Code{% endblock %}
 {% block content %}
 <style>
-    h3{
-        color: white;
-    }
-
     body{
-     background-image: linear-gradient(rgba(0, 0, 0, 0.75),rgba(0, 0, 0, 0.75)), url('https://media-exp1.licdn.com/dms/image/C511BAQGwsS5GIYy19w/company-background_10000/0/1525316095651?e=2147483647&v=beta&t=hwgc1zMVigRlBA5-9o4dgB-zWAxvxL5Cw916J7nw7Xk' );
+     background-image: linear-gradient(rgba(0, 0, 0, 0.1),rgba(0, 0, 0, 0.1)), url('https://images.unsplash.com/photo-1519219788971-8d9797e0928e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1144&q=80' );
      background-repeat: no-repeat;
      background-size: 100% 100vh;
    }
@@ -15,15 +11,30 @@
   width: 1200px;
   height: 150px;
 }
+.content{
+    text-align: center;
+}
     </style>
+    <body>
+        <div class="navbar">
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/about/">About SQLI</a></li>
+                <li><a href="/testCode/">Test Code</a></li>
+                <li><a href="/dashboard/">Dashboard</a></li>
+            </ul>
+        </div>
+    </body>
 <h3 style="text-align: center;">Test Your Code</h3>
 <!-- <img src="https://media-exp1.licdn.com/dms/image/C511BAQGwsS5GIYy19w/company-background_10000/0/1525316095651?e=2147483647&v=beta&t=hwgc1zMVigRlBA5-9o4dgB-zWAxvxL5Cw916J7nw7Xk" width="400" height="200"> -->
 <br></br>
 <form method="POST">
+    <div class="content">
     <textarea name="codeText" id="codeText" placeholder="Write your code here..."></textarea>
     <br />
     <div>
         <button type="submit" class="btn btn-primary">Process code</button>
     </div>
+</div>
 </form>
 {% endblock %}

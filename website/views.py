@@ -7,8 +7,19 @@ views = Blueprint('views', __name__)
 
 
 @views.route('/')
+@login_required
 def home():
-    return render_template('signin.html') #TODO CHANGE IT TO PATH user/login
+    return render_template('Home.html') 
+
+@views.route('/about/')
+@login_required
+def about():
+    return render_template('about.html')
+
+@views.route('/testCode/')
+@login_required
+def testCode():
+    return render_template('testCode.html')
 
 @views.route('/dashboard/')
 @login_required
@@ -22,6 +33,16 @@ def signup():
 @views.route('user/login')
 def login():
     return render_template('signin.html')
+
+
+@views.route('/mongoSQLI')
+def mongoSQLI():
+    return render_template('mongoSQLI.html')
+
+
+@views.route('/redisSQLI')
+def redisSQLI():
+    return render_template('redisSQLI.html')
 
 
 @views.route('/instances/', methods=['GET', 'POST', 'DELETE'])

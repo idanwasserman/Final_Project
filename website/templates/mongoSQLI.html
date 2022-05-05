@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block title %}MongoDB SQLI{% endblock %}
+{% block content %}
+<style>
+    body {
+        background-image: url("https://images.unsplash.com/photo-1604147706283-d7119b5b822c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80");
+        background-repeat: round;
+        background-size: 100% 100vh;
+    }
+
+    .content{
+        padding: 30px;
+    }
+    </style>
+  <body>
+    <div class="navbar">
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/about/">About SQLI</a></li>
+            <li><a href="/testCode/">Test Code</a></li>
+            <li><a href="/dashboard/">Dashboard</a></li>
+        </ul>
+    </div>
+</body>
+<div class="content">
+    <h1>SQL Injection in MongoDB</h1>
+    <p>MongoDB is vulnerable to SQL injection attacks. Even though it’s a NoSQL database.
+        In combination with Node.js, MongoDB is a powerful tool. You can easily send requests with API queries. A typical example of a MongoDB request would look something like this:
+        <p class="query" >Products.find({ price: { $gte: 10 } }, callback); </p>
+    </br>In the example above, we’ve used the find function to fetch the Products collection, Passing  the property price and a condition that the price is greater than 10 ($gte : 10).
+<br>These requests are a big security concern for one main reason – the attacker is able to send an object to the query instead of an expected string or an integer, which could lead to considerable data leakage. In fact, there was a big scandal in 2018  when an attacker stole the data of 11 million users from Yahoo. Yahoo used MongoDB databases at the time, resulting in drastic changes to their approach afterwards. 
+
+Additionally, MongoDB uses Binary JSON (BSON) data format and because the queries are actually BSON objects, a direct injection is impossible. However, an attacker can take advantage of the $where function that uses JavaScript. So, for example:</p>
+<p class="query">db.collection.find({ $where: function() {<br>
+    return (this.product == “Milk”)<br> 
+    }});</p>
+    <p>This simple query would do exactly as expected – return a product name named ‘Milk’. However, with improper input sanitisation, an attacker can take advantage of this. The malicious code would be as follows:</p>
+    <p class="query">db.collection.find({ $where: function() { {<br>
+        return (this.product == $productData)<br> 
+        }});</p>
+    
+    <p>The example above could be used as a test for the attacker to see if the database returns valid results. If  it does, the possibilities are endless. So, the attacker could, for example, send a malicious code within the object. A good example would be:</p>
+    <p class="query">db.collection.find({ $where: function() { {<br>
+        return (this.product == ‘m’; sleep (10000))<br> 
+        }});</p>
+    <p>If the server paused for five seconds after sending this command, it’s a confirmation for the attacker that he has the direct access and that he can perform an injection.</p>
+    <h3>How to prevent MongoDB vulnerabilities</h3>
+    <p>The first step to preventing SQL Injection with MongoDB is sanitizing the input. Although this may appear as  simple advice, many web applications using NoSQL products are quite new and perhaps undergoing comprehensive development, leaving room for mistakes. Unvalidated input often leads to DDoS attacks or the attacker taking over the server, so you ought to be extremely careful with this. 
+
+        MongoDB has a series of built-in features for secure query building without JavaScript. However if the use of JavaScript in queries is required, ensure that best practices are followed, including validating and encoding all user inputs, applying the rule of least privilege, and avoiding the use of vulnerable constructs.</p>
+    <div>
+{% endblock %}
