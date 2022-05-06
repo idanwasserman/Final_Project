@@ -317,16 +317,18 @@ def invoke_activity(json):
 
 def predict(form):
     if form is None:
-        return jsonify({ERROR: 'form is None'}), 400
+        return jsonify({OUTPUT: 'form is None'}), 400
 
     if CODE_TEXT not in form:
-         return jsonify({ERROR: f'{CODE_TEXT} not in form'}), 400
-        # return "Code text not in form"
+         return jsonify({OUTPUT: f'{CODE_TEXT} not in form'}), 400
 
     input = form[CODE_TEXT]
+    if len(input) < 3:
+        return jsonify({ OUTPUT: "Code must have at least 3 characters "}), 400
+
     try:
-        return predict_sqli(input)
-        # return jsonify({OUTPUT: output}), 200
+        output = predict_sqli(input)
+        return jsonify({ OUTPUT: output }), 200
 
     except Exception as e:
-        return jsonify({ERROR: f"predict(form): caught exception - {e}"}), 400
+        return jsonify({OUTPUT: f"predict(form): caught exception - {e}"}), 400
