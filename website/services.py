@@ -320,12 +320,13 @@ def predict(form):
         return jsonify({ERROR: 'form is None'}), 400
 
     if CODE_TEXT not in form:
-        return jsonify({ERROR: f'{CODE_TEXT} not in form'}), 400
+         return jsonify({ERROR: f'{CODE_TEXT} not in form'}), 400
+        # return "Code text not in form"
 
     input = form[CODE_TEXT]
     try:
-        output = predict_sqli(input)
-        return jsonify({OUTPUT: output}), 200
+        return predict_sqli(input)
+        # return jsonify({OUTPUT: output}), 200
 
     except Exception as e:
         return jsonify({ERROR: f"predict(form): caught exception - {e}"}), 400

@@ -22,7 +22,11 @@ def testCode():
     if request.method == 'GET':
         return render_template('testCode.html')
     elif request.method == 'POST':
-        return predict(request.form)
+        text = request.form.get("codeText")
+        if len(text) < 2:
+            return render_template("testCode.html", msg="Code Must Have At Least 3 Chars")
+        output = predict(request.form)
+        return render_template("testCode.html", msg=output)
 
 @views.route('/dashboard/')
 @login_required
