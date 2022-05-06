@@ -4,6 +4,7 @@ from . import db, invoker
 from flask import jsonify, make_response
 from .exceptions import *
 from .constants import *
+from ml.model import predict_sqli
 
 
 def get_all_instances(args):
@@ -314,16 +315,17 @@ def invoke_activity(json):
         return bad_request_exception(f"invoke_activity(json) caught exception: {e}")
 
 
-def register(form):
+def predict(form):
+    if form is None:
+        return jsonify({ERROR: 'form is None'}), 400
+
+    if TEXT not in form:
+        return jsonify({ERROR: f'{TEXT} not in form'}), 400
+
+    input = form[TEXT]
     try:
-        email = form.get(EMAIL)
-        username = form.get(USERNAME)
-        password1 = form.get(PASSWORD + '1')
-        password2 = form.get(PASSWORD + '2')
+        output = predict_sqli(input)
+        return jsonify({OUTPUT: output}), 200
 
     except Exception as e:
-        return bad_request_exception({"Error":e})
-
-    return make_response({
-        EMAIL: email, USERNAME: username, PASSWORD+'1':password1, PASSWORD+'2':password2 
-    })
+        return jsonify({ERROR: f"predict(form): caught exception - {e}"}), 400

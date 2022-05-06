@@ -29,3 +29,6 @@ PAGE = "page"
 
 IN_OPERATOR = "$in"
 SET_OPERATOR = "$set"
+
+TEXT = "text"
+OUTPUT = "output"

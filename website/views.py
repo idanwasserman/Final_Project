@@ -16,10 +16,13 @@ def home():
 def about():
     return render_template('about.html')
 
-@views.route('/testCode/')
+@views.route('/testCode/', methods=['GET', 'POST'])
 @login_required
 def testCode():
-    return render_template('testCode.html')
+    if request.method == 'GET':
+        return render_template('testCode.html')
+    elif request.method == 'POST':
+        return predict(request.form)
 
 @views.route('/dashboard/')
 @login_required
