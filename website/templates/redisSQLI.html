@@ -3,10 +3,85 @@
 {% block content %}
 <style>
     body {
-        background-image: url("https://images.unsplash.com/photo-1589447388175-ac47d31be950?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80");
-        background-repeat: no-repeat;
+        background-image: url("https://images.unsplash.com/photo-1604147706283-d7119b5b822c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80");
+        background-repeat: round;
         background-size: 100% 100vh;
     }
-    </style>
 
+    .content{
+        padding: 30px;
+    }
+    img{
+      padding: 20px;
+      width: 600px;
+      height: 200px;
+    }
+    </style>
+  <body>
+    <div class="navbar">
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/about/">About SQLI</a></li>
+            <li><a href="/testCode/">Test Code</a></li>
+            <li><a href="/dashboard/">Dashboard</a></li>
+        </ul>
+    </div>
+    <img src="https://ps.w.org/redis-cache/assets/banner-1544x500.png?rev=2315420">
+<div class="content">
+    <h1>SQL Injection in Redis</h1>
+    <p>Redis is just a key-value store … so what’s the worst that could happen? Well,
+     let’s have a closer look. The most prevalent driver for Redis on Node.js gives us a great point to start from. Its documentations says:<br>
+     All functions take either an args array plus optional callback function or a variable number of individual arguments followed by an optional callback.<br>
+     This feature allows multiple distinct ways to invoke the exact same functionality. Suchlike preconditions are perfect for injection attacks.<br>
+      For example, the following two calls lead to the exact same database query.
+    </p>
+    <p class="query">client.set("some_key", "some_val"); <br>
+        client.set(["some_key", "some_val"]);</p>
+    <p>The first line is where our injection approach applies. When an attacker is in control of any comma separated parameter,
+        he may be able to overwrite all following parameters by injecting an array instead of a string or integer value.
+         Basically, we try to transform the first line (individual arguments) into the second line (arguments array).
+          The following examples illustrate this approach in the context of an express app.</p>
+    <h3>Example 1, JSON</h3>
+    <p>We assume an application that takes an arbitrary key from the request and sets a default, hard-coded value. In this first example, the key is provided by the JSON body.</p>
+    <p class="query">app.use(bodyParser.json());<br>
+        app.post('/', function (req, res) {<br>
+            redis.set(req.body.key, "default");
+        });</p>
+    <p>Normal request sets the JSON body to {key : "foo"} and results in</p>
+    <p class="query">redis.set("foo", "default");</p>
+    <p>Injection request sets the JSON body to {key : ["foo", "evil"]} and results in</p>
+    <p class="query">redis.set(["foo", "evil"], "default");</p>
+    <p>In contrast to the string value in the normal request, an array containing two strings is passed in the injection request. 
+        This injected array is inserted as the first parameter req.body.key of the database driver call. 
+        The driver interprets the injected array as arguments array and store foo=evil as a key-value pair. 
+        On the other hand, the now trailing "default" value is ignored*.</p>
+    <h3>Example 2, Query-string</h3>
+    <p>We assume the same application, but this time the key is provided by the query-string parameter.</p>
+    <p class="query">app.post('/', function (req, res) { <br> 
+        redis.set(req.query.key, "default");<br>
+    });</p>
+    <p>Normal request sets the query-string t0 ?key=foo and results in</p>
+    <p class="query">redis.set("foo", "default");</p>
+    <p>Injection request sets the query-string to ?key[]=foo&key[]=evil and results in</p>
+    <p class="query">redis.set(["foo", "evil"], "default");</p>
+    <p>The injection attack via query-string parameter works similar to the one shown with JSON,
+        but this time an arguments array cannot be injected directly. Instead, we can make use of the widespread qs module.
+         This module enables an extended query-string syntax that allows users to pass objects or arrays as parameters.
+          And the best of all - prevalent frameworks like express enable this module by default. In these cases,
+           ?key[]=foo&key[]=evil is transformed to an array that in turn is interpreted as an arguments array by the driver. 
+        As a result, foo=evil is stored as key-value pair and the trailing "default" value is scraped*.</p>
+    <h3>Example 3, Form-URL Encoded</h3>
+    <p>We assume the same application, but this time the key is provided by a form-url encoded body parameter.</p>
+    <p class="query">app.use(bodyParser.urlencoded());<br>
+        app.post('/', function (req, res) {<br>
+            redis.set(req.body.key, "default");<br>
+        });</p>
+    <p>Normal request sets the query-string to key=foo and results in</p>
+    <p class="query">redis.set("foo", "default");</p>
+    <p>Normal request sets the query-string to key=foo and results in</p>
+    <p class="query">redis.set(["foo", "evil"], "default");</p>
+    <p>This injection vector exploits the behavior of the bodyParser which enables the injection of arrays by the same extended syntax 
+        (shown in the second example) applied to form-url encoded request bodies. 
+        The result corresponds to the two previously outlined examples.</p>
+</body>
 {% endblock %}
