@@ -30,5 +30,5 @@ PAGE = "page"
 IN_OPERATOR = "$in"
 SET_OPERATOR = "$set"
 
-TEXT = "text"
+CODE_TEXT = "codeText"
 OUTPUT = "output"

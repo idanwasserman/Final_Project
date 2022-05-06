@@ -319,10 +319,10 @@ def predict(form):
     if form is None:
         return jsonify({ERROR: 'form is None'}), 400
 
-    if TEXT not in form:
-        return jsonify({ERROR: f'{TEXT} not in form'}), 400
+    if CODE_TEXT not in form:
+        return jsonify({ERROR: f'{CODE_TEXT} not in form'}), 400
 
-    input = form[TEXT]
+    input = form[CODE_TEXT]
     try:
         output = predict_sqli(input)
         return jsonify({OUTPUT: output}), 200
