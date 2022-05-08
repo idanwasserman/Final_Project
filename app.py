@@ -1,6 +1,8 @@
 from website import create_app
+from ml import init_ml_models
 
 
+init_ml_models()
 app = create_app()
 
 

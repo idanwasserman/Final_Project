@@ -5,7 +5,7 @@ from .config import *
 from .invoker import Invoker
 from pymongo import MongoClient
 from website.command import get_commands_dict
-from flask_login import LoginManager
+# from flask_login import LoginManager
 
 
 # Database

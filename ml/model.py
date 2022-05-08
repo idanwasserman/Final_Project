@@ -1,18 +1,20 @@
+from .gbc.gbc import gbc_predict
+from.cnn.cnn import cnn_predict
 
+
+HIGH_RISK_MSG = "ALERT - Might be SQL Injection (HIGH risk)"
+LOW_RISK_MSG = "ALERT - Might be SQL Injection (LOW risk)"
+SAFE_MSG = "Seems to be safe"
+OUTPUT_MSG = [SAFE_MSG, LOW_RISK_MSG, HIGH_RISK_MSG]
 
 
 def predict_sqli(input):
-    # clean data (text)
 
-    # predict
-    # result = 0.5 # result = model.predict(cleaned_data)
-    # if result > 0.5:
-    #     output = 'ALERT :::: This can be SQL injection'
-    # else:
-    #     output = 'It seems to be safe'
+    gbc_output = gbc_predict(input)
+    cnn_output = cnn_predict(input)
 
-    output = input + " after ml algo"
+    output_msg = OUTPUT_MSG[ gbc_output + cnn_output ]
+
+    output = f"     input: { input }     ,     output: { output_msg }"
+
     return output
-
-
-    
