@@ -14,7 +14,4 @@ def predict_sqli(input):
     cnn_output = cnn_predict(input)
 
     output_msg = OUTPUT_MSG[ gbc_output + cnn_output ]
-
-    output = f"     input: { input }     ,     output: { output_msg }"
-
-    return output
+    return output_msg

@@ -32,3 +32,4 @@ SET_OPERATOR = "$set"
 
 CODE_TEXT = "codeText"
 OUTPUT = "output"
+INPUT = "input"

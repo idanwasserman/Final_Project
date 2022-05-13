@@ -1,7 +1,8 @@
+from telnetlib import OUTMRK
 import uuid
 import pymongo
 from . import db, invoker
-from flask import jsonify, make_response
+from flask import jsonify, make_response, session
 from .exceptions import *
 from .constants import *
 from ml.model import predict_sqli
@@ -80,7 +81,7 @@ def get_all_instances_by_attribute(attKey, value, args):
     try:
         cursor = db.project_tb.find(my_query)
         instances = [document_to_instance(doc) for doc in cursor]
-        return instances
+        return { INSTANCE + 's': instances }
         
     except Exception as e:
         return bad_request_exception({
@@ -328,7 +329,21 @@ def predict(form):
 
     try:
         output = predict_sqli(input)
+        create_instance( { INSTANCE: {
+            TYPE: QUERY,
+            ATTRIBUTES: {
+                INPUT: input,
+                OUTPUT: output,
+                EMAIL: session[USER][EMAIL]
+            }
+        }})
         return jsonify({ OUTPUT: output }), 200
 
     except Exception as e:
         return jsonify({OUTPUT: f"predict(form): caught exception - {e}"}), 400
+
+
+def get_user_history():
+    history = get_all_instances_by_attribute(EMAIL, session[USER][EMAIL], [])
+    return { "history": history }
+    

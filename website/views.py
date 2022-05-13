@@ -34,11 +34,11 @@ def testCode():
 def dashboard():
     return render_template('dashboard.html')
 
-@views.route('user/signup')
+@views.route('/user/signup')
 def signup():
     return render_template('signup.html')
 
-@views.route('user/login')
+@views.route('/user/login')
 def login():
     return render_template('signin.html')
 
@@ -123,3 +123,9 @@ def api_activities():
         
     else:
         return bad_request_exception("Not a POST method")
+
+
+@views.route('/history')
+@login_required
+def history():
+    return get_user_history()
