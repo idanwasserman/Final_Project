@@ -35,7 +35,14 @@
     <div>
         <button type="submit" class="btn btn-primary">Process code</button>
     </div>
-    <p>{{msg}}</p>
+    {%if risk == 2%}
+    <p class="answer" style="color: red;">{{msg}}</p>
+    {%endif%}
+    {%if risk == 1%}
+    <p class="answer" style="color: orange;">{{msg}}</p>
+    {%else%}
+    <p class="answer" style="color: green;">{{msg}}</p>
+    {%endif%}
 </div>
 </form>
 {% endblock %}

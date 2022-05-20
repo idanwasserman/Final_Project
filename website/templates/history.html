@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block title %}Test History{% endblock %}
+{% block content %}
+<style>
+      body{
+       background-image: linear-gradient(rgba(0, 0, 0, 0.1),rgba(0, 0, 0, 0.1)), url('https://images.unsplash.com/photo-1518655048521-f130df041f66?crop=entropy&cs=tinysrgb&fm=jpg&ixlib=rb-1.2.1&q=80&raw_url=true&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170');
+       background-repeat: no-repeat;
+       background-size: 100% 100vh;
+     }
+
+     .history-query {
+    margin: 0.2% 0 0;
+    margin-left: 23%;
+    padding: 10px 20px;
+    width: 1000px;
+    box-shadow: 0 8px 26px -4px rgba(0,0,0,0.15);
+    border-radius: 5px;
+    background: var(--white);
+    color: rgb(32, 91, 179);
+  }
+</style>
+<body>
+  <div class="navbar">
+      <ul>
+          <li><a href="/">Home</a></li>
+          <li><a href="/about/">About SQLI</a></li>
+          <li><a href="/testCode/">Test Code</a></li>
+          <li><a href="/dashboard">Dashboard</a></li>
+      </ul>
+  </div>
+
+  <h1 align="center">Test History</h1>
+  <ul id="history">
+      {% for i in queries %}
+      <p class="history-query">{{i}}</p>
+      {% endfor %}
+  </ul>
+</body>
+
+
+
+    
+    </div>
+  
+  </div>
+{% endblock %}

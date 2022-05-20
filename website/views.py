@@ -23,11 +23,16 @@ def testCode():
         return render_template('testCode.html')
     elif request.method == 'POST':
         result_msg = predict(request.form)[0].get_json()[OUTPUT]
+        isRisk = 0
+        if "HIGH" in result_msg:
+            isRisk = 2
+        elif "LOW" in result_msg:
+            isRisk = 1
         # prediction = predict(request.form)
         # response = prediction[0]
         # result_msg = response.get_json()[OUTPUT]
         output = f"Result: { result_msg }"
-        return render_template("testCode.html", msg=output)
+        return render_template("testCode.html", msg=output, risk = isRisk)
 
 @views.route('/dashboard/')
 @login_required
@@ -125,7 +130,9 @@ def api_activities():
         return bad_request_exception("Not a POST method")
 
 
-@views.route('/history')
+@views.route('/history/')
 @login_required
 def history():
-    return get_user_history()
+    #return get_user_history()
+    userQueries = {"Hello", "World", "Check", "This"}
+    return render_template('history.html', queries= userQueries)
