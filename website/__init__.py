@@ -29,7 +29,7 @@ def login_required(f):
         if LOGGED_IN in session:
             return f(*args, **kwargs)
         else:
-            return redirect('/')
+            return redirect('/user/login')
     return wrap
 
 

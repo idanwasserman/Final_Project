@@ -7,12 +7,10 @@ views = Blueprint('views', __name__)
 
 
 @views.route('/')
-@login_required
 def home():
-    return render_template('Home.html') 
+    return render_template('home.html') 
 
 @views.route('/about/')
-@login_required
 def about():
     return render_template('about.html')
 
@@ -38,14 +36,6 @@ def testCode():
 @login_required
 def dashboard():
     return render_template('dashboard.html')
-
-@views.route('/user/signup')
-def signup():
-    return render_template('signup.html')
-
-@views.route('/user/login')
-def login():
-    return render_template('signin.html')
 
 
 @views.route('/mongoSQLI')
