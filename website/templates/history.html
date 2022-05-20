@@ -17,7 +17,10 @@
     border-radius: 5px;
     background: var(--white);
     color: rgb(32, 91, 179);
-  }
+    }
+    table, th, td {
+      border:1px solid black;
+    }
 </style>
 <body>
   <div class="navbar">
@@ -30,17 +33,19 @@
   </div>
 
   <h1 align="center">Test History</h1>
-  <ul id="history">
-      {% for i in queries %}
-      <p class="history-query">{{i}}</p>
-      {% endfor %}
-  </ul>
+  <table style="width:50%" align="center">
+    <tr>
+      <th>Input</th>
+      <th>Output</th>
+    </tr>
+  {% for d in data %}
+    <tr>
+      <td> {{ d['input'] }} </td> 
+      <td> {{ d['output'] }} </td>
+    </tr>
+  {% endfor %}
+  </table>
 </body>
-
-
-
-    
     </div>
-  
   </div>
 {% endblock %}

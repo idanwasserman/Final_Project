@@ -345,5 +345,11 @@ def predict(form):
 
 def get_user_history():
     history = get_all_instances_by_attribute(EMAIL, session[USER][EMAIL], [])
-    return { "history": history }
+    queries = []
+    for instance in history[INSTANCE + 's']:
+        queries.append({
+            INPUT: instance[ATTRIBUTES][INPUT],
+            OUTPUT: instance[ATTRIBUTES][OUTPUT]
+        })
+    return { HISTORY: queries }
     

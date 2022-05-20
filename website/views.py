@@ -123,6 +123,5 @@ def api_activities():
 @views.route('/history/')
 @login_required
 def history():
-    #return get_user_history()
-    userQueries = {"Hello", "World", "Check", "This"}
-    return render_template('history.html', queries= userQueries)
+    user_history = get_user_history()
+    return render_template('history.html', data=user_history[HISTORY])
