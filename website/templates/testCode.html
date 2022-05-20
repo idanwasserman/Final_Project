@@ -40,7 +40,8 @@
     {%endif%}
     {%if risk == 1%}
     <p class="answer" style="color: orange;">{{msg}}</p>
-    {%else%}
+    {%endif%}
+    {%if risk == 0%}
     <p class="answer" style="color: green;">{{msg}}</p>
     {%endif%}
 </div>

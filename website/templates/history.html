@@ -33,7 +33,7 @@
   </div>
 
   <h1 align="center">Test History</h1>
-  <table style="width:50%" align="center">
+  <table style="width:50%; background-color: white;" align="center" >
     <tr>
       <th>Input</th>
       <th>Output</th>
@@ -41,7 +41,15 @@
   {% for d in data %}
     <tr>
       <td> {{ d['input'] }} </td> 
-      <td> {{ d['output'] }} </td>
+      {%if d['output'] == "ALERT - Might be SQL Injection (LOW risk)" %}
+      <td style="color: rgb(246, 136, 10);"> {{ d['output'] }} </td>
+      {%endif%}
+      {% if d['output'] == "ALERT - Might be SQL Injection (HIGH risk)"%}
+      <td style="color: red;"> {{ d['output'] }} </td>
+      {%endif%}
+      {% if d['output'] == "Seems to be safe"%}
+      <td style="color: green;"> {{ d['output'] }} </td>
+      {%endif%}
     </tr>
   {% endfor %}
   </table>
